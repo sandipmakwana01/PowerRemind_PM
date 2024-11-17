@@ -3,7 +3,7 @@ from FirstApp import views
 # from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('', views.index,name='client'),
+    path('', views.index,name='home'),
     # Menu
     path('profile/',views.profile,name='profile'),
     path('client_add/',views.client_add_view,name='client_add'),

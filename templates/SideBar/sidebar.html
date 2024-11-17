@@ -5,7 +5,7 @@
     <!-- LOGO -->
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
-        <a href="{% url 'client' %}" class="logo logo-dark">
+        <a href="{% url 'home' %}" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="{% static 'images/logo-sm.png' %}" alt="" height="22">
             </span>
@@ -15,7 +15,7 @@
             </span>
         </a> 
         <!-- Light Logo-->
-        <a href="{% url 'client' %}" class="logo logo-light">
+        <a href="{% url 'home' %}" class="logo logo-light">
             <span class="logo-sm ">
                 <img class=" border border-2 bg-light rounded-circle" src="{% static 'images/logo-sm.png' %}" alt="" height="22">
             </span>
@@ -41,7 +41,7 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{% url 'client' %}">
+                    <a class="nav-link menu-link" href="{% url 'home' %}">
                         <i class="las la-file-invoice"></i> <span key="t-profile">Client</span>
                     </a>
                 </li>

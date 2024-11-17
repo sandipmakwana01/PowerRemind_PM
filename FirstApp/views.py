@@ -24,7 +24,7 @@ def client_add_view(request):
                 client.user = Authentication.objects.get(user_name=request.session['user_name'])
                 client.save()
                 messages.success(request, 'Client added successfully.')
-                return redirect('client')
+                return redirect('home')
             else:
                 print(form.errors)
         else:
@@ -43,7 +43,7 @@ def client_update_view(request,id):
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Client details updated successfully.')
-                return redirect('client')
+                return redirect('home')
         else:
             form = ClientUpdateForm(instance=client_details)
 
@@ -102,7 +102,7 @@ def login(request):
                 request.session['user_name'] = get_data.user_name
                 request.session['password'] = get_data.password
 
-                return redirect('client')
+                return redirect('home')
             else:
                 messages.error(request,'Incorect Username and Password')
 

@@ -1,0 +1,136 @@
+{% extends 'FirstApp/base.html' %}
+{% load static %}
+{% block title %} Client Add {% endblock title %} 
+
+{% block extra_css %}
+
+    <!-- dropzone css -->
+    <link rel="stylesheet" href="{% static 'libs/dropzone/dropzone.css' %}" type="text/css" />
+
+    <!-- Sweet Alert css-->
+    <link href="{% static 'libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
+
+{% endblock extra_css %}
+
+
+{% block content %}
+
+    
+
+                    <div class="row justify-content-center">
+
+                        
+                        <div class="col-xxl-9">
+
+                            <div class="col-sm-4 mb-3 me-auto">
+                                <a href="{% url 'client' %}" class="btn btn-primary addMembers-modal"><i class="las la-arrow-left me-1"></i> Back </a>
+                            </div>
+
+                            <div class="card">
+                                <form class="needs-validation" novalidate id="invoice_form" method="POST">
+                                    {% csrf_token %}
+                                    <div class="card-body border-bottom border-bottom-dashed p-4">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="row g-3">
+                                                    <div class="">
+                                                        <div>
+                                                            <label for="">Name</label>
+                                                            <input name='name' type="email" class="form-control bg-light border-0" id="" placeholder="Enter Name" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="">
+                                                        <label for="">Contact Number</label>
+                                                        <input name='contact_number' type="text" class="form-control bg-light border-0" data-plugin="cleave-phone" id="" placeholder="Contact No" required />
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="">
+                                                        <div>
+                                                            <label for="">Date</label>
+                                                            <input name='start_date' type="text" class="form-control bg-light border-0 flatpickr-input" id="start_date" data-provider="flatpickr" data-time="true" placeholder="Select Date" readonly="readonly">
+                                                        </div>
+                                                    </div>
+                                                    <div class="">
+                                                        <div>
+                                                            <label for="">Amount</label>
+                                                            <input name='amount' type="number" class="form-control bg-light border-0" id="" step="" placeholder="&#8377; 0.00" required />
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="">
+                                                        <div>
+                                                            <label for="">Percentage </label>
+                                                            <input name='percentage' type="number" class="form-control bg-light border-0" id="" step="" placeholder="&#37; 0.00" required />
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="">
+                                                        <label for="">Status</label>
+                                                        <div class="input-light">
+                                                            <select name='status' class="form-control bg-light border-0" data-choices data-choices-search-false id="">
+                                                                <option value="">Select Status</option>
+                                                                <option selected value="process">Process</option>
+                                                                <option value="complete">Complete</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                  
+                                                    <!--end col-->
+                                                </div>
+                                                
+                                            </div>
+                                            <!--end col-->
+                                          
+                                        </div>
+                                        <!--end row-->
+                                    </div>
+                                  
+                                    <div class="card-body p-4">
+                                        <div class="hstack gap-2 justify-content-center d-print-none mt-4">
+                                            <button type="submit" class="btn btn-info"><i class="ri-download-2-line align-bottom me-1"></i> Save</button>
+                                            {% comment %} <a href="javascript:void(0);" class="btn btn-primary"><i class="ri-download-2-line align-bottom me-1"></i> Download Invoice</a>
+                                            <a href="javascript:void(0);" class="btn btn-danger"><i class="ri-send-plane-fill align-bottom me-1"></i> Send Invoice</a> {% endcomment %}
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!--end col-->
+                    </div>
+                    <!--end row-->
+{% endblock content %}
+
+{% block extra_js %}
+
+    <!-- dropzone min -->
+    <script src="{% static 'libs/dropzone/dropzone-min.js' %}"></script>
+
+    <!-- cleave.js -->
+    <script src="{% static 'libs/cleave.js/cleave.min.js' %}"></script>
+
+    <!--Invoice create init js-->
+    <script src="{% static 'js/pages/invoicecreate.init.js' %}"></script>
+
+    <!-- Sweet Alerts js -->
+    <script src="{% static 'libs/sweetalert2/sweetalert2.min.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr("#start_date", {
+                defaultDate: "today",  // This sets the default value to today's date
+                enableTime: false,  // Enable time selection (if needed)
+                dateFormat: "Y-m-d"  // Format for displaying the date and time
+            });
+        });
+    </script>
+
+{% endblock extra_js %}
+                    
+         
+
+   
+

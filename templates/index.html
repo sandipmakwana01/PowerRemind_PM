@@ -1,0 +1,306 @@
+{% extends 'FirstApp/base.html' %}
+{% load static %}
+{% block title %}Invoice {% endblock title %} 
+
+{% block extra_css %}
+
+    <!-- Sweet Alert css-->
+    <link href="{% static 'libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <meta http-equiv="refresh" content="86400">
+
+{% endblock extra_css %}
+
+{% block content %}
+{% if messages %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      {% for message in messages %}
+        Swal.fire({
+          title: "{% if message.tags == 'error' %}Error{% elif message.tags == 'success' %}Success{% elif message.tags == 'warning' %}Warning{% else %}Info{% endif %}",
+          text: "{{ message }}",
+          icon: "{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% elif message.tags == 'warning' %}warning{% else %}info{% endif %}",
+          confirmButtonText: "OK"
+        });
+      {% endfor %}
+    });
+  </script>
+{% endif %}
+                    <div class="row pb-4 gy-3">
+                        <div class="col-sm-4">
+                            <a href="{% url 'client_add' %}" class="btn btn-primary addMembers-modal"><i class="las la-plus me-1"></i> Add Client</a>
+                        </div>
+
+                        {% comment %} <div class="col-sm-auto ms-auto">
+                           <div class="d-flex gap-3">
+                            <div class="search-box">
+                                <input type="text" class="form-control" placeholder="Search for name or designation...">
+                                <i class="las la-search search-icon"></i>
+                            </div>
+                            <div class="">
+                                <button type="button" id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false" class="btn btn-soft-info btn-icon fs-14"><i class="las la-ellipsis-v fs-18"></i></button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+                                    <li><a class="dropdown-item" href="#">Print</a></li>
+                                    <li><a class="dropdown-item" href="#">Export to Excel</a></li>
+                                </ul>
+                            </div>
+                           </div>
+                        </div> {% endcomment %}
+                    </div>
+
+                    {% comment %} <div class="row">
+                        <div class="col-xl-3 col-md-6">
+                            <!-- card -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            <h4 class="fs-22 fw-semibold ff-secondary mb-2">$<span class="counter-value" data-target="559.25">0</span>k</h4>
+                                            <p class="text-uppercase fw-medium fs-14 text-muted mb-0">Invoices Sent 
+                                                <span class="text-success fs-14 mb-0 ms-1">
+                                                    <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +89.24 %
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="avatar-sm flex-shrink-0">
+                                            <span class="avatar-title bg-light rounded-circle fs-3">
+                                                <i class="las la-file-alt fs-24 text-primary"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-end justify-content-between mt-4">
+                                        <div>
+                                            <span class="badge bg-primary me-1">2,258</span> <span class="text-muted">Invoices sent</span>
+                                        </div>
+                                    </div>
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+                        </div><!-- end col -->
+
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            <h4 class="fs-22 fw-semibold ff-secondary mb-2">$<span class="counter-value" data-target="409.66">0</span>k</h4>
+                                            <p class="text-uppercase fw-medium fs-14 text-muted mb-0">Paid Invoices
+                                                <span class="text-danger fs-14 mb-0 ms-1">
+                                                    <i class="ri-arrow-right-down-line fs-13 align-middle"></i> +8.09 %
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="avatar-sm flex-shrink-0">
+                                            <span class="avatar-title bg-light rounded-circle fs-3">
+                                                <i class="las la-check-square fs-24 text-primary"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-end justify-content-between mt-4">
+                                        <div>
+                                            <span class="badge bg-danger me-1">1,958</span> <span class="text-muted">Paid by clients</span>
+                                        </div>
+                                    </div>
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+                        </div><!-- end col -->
+
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-primary">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            <h4 class="fs-22 fw-semibold ff-secondary mb-2 text-white">$<span class="counter-value" data-target="136.98">0</span>k</h4>
+                                            <p class="text-uppercase fw-medium fs-14 text-white-50 mb-0"> Unpaid Invoices
+                                                <span class="text-danger fs-14 mb-0 ms-1">
+                                                    <i class="ri-arrow-right-down-line fs-13 align-middle"></i> +9.01 %
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="avatar-sm flex-shrink-0">
+                                            <span class="avatar-title bg-light-subtle text-light  rounded-circle fs-3">
+                                                <i class="las la-clock fs-24 text-white"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-end justify-content-between mt-4">
+                                        <div>
+                                            <span class="badge bg-danger me-1">338</span> <span class="text-white">Unpaid by clients</span>
+                                        </div>
+                                    </div>
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+                        </div><!-- end col -->
+
+                        <div class="col-xl-3 col-md-6">
+                            <!-- card -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            <h4 class="fs-22 fw-semibold ff-secondary mb-2">$<span class="counter-value" data-target="84.20">0</span>k</h4>
+                                            <p class="text-uppercase fw-medium fs-14 text-muted mb-0"> Cancelled Invoices
+                                                <span class="text-success fs-14 mb-0 ms-1">
+                                                    <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +7.55 %
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="avatar-sm flex-shrink-0">
+                                            <span class="avatar-title bg-light rounded-circle fs-3">
+                                                <i class="las la-times-circle fs-24 text-primary"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-end justify-content-between mt-4">
+                                        <div>
+                                            <span class="badge bg-primary me-1">502</span> <span class="text-muted">Cancelled by clients</span>
+                                        </div>
+                                    </div>
+                                </div><!-- end card body -->
+                            </div><!-- end card -->
+                        </div><!-- end col -->
+                    </div> {% endcomment %}
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive table-card">
+                                        <table class="table table-hover table-nowrap align-middle mb-0">
+                                            <thead>
+                                                <tr class="text-muted text-uppercase">
+                                
+                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col" style="">Contact No.</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col" style="">Per.</th>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col" style="">Interest </th>
+                                                     {% comment %} Gained {% endcomment %}
+                                                    <th scope="col" style="">Total</th>
+                                                    <th scope="col" style="">Action</th>
+                                                    <th scope="col" style="">Status</th>
+                                                </tr>
+                                            </thead>
+        
+                                            <tbody>
+                                                {% for c in client_details %}
+                                                <tr >
+                                                    <td>
+                                                        <p class="fw-medium mb-0">{{c.id}}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="fw-medium mb-0"> <a href="" class="text-body align-middle fw-medium">{{c.name}}</a></p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="fw-medium mb-0">{{c.contact_number}}</p>
+                                                    </td>
+                                                    <td>{{c.start_date}}</td>
+                                                    <td>% {{c.percentage}}</td>
+                                                    <td>&#8377; {{c.current_amount}}</td>
+                                                    <td >&#8377; {{c.current_interest }}</td>
+                                                    <td>&#8377; {{c.total_amount}}</td>
+                                                    <td>
+                                                        <ul class="list-inline hstack gap-2 mb-0">
+                                                            
+                                                            <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                                                <a href="{% url 'client_update' c.id %}" class="btn btn-soft-info btn-sm d-inline-block">
+                                                                    <i class="las la-pen fs-17 align-middle"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
+                                                                <a href="{% url 'client_update' c.id %}" class="btn btn-soft-danger btn-sm d-inline-block">
+                                                                    <i class="las la-trash-alt fs-18 align-middle"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    {% if c.status == 'process' %}
+                                                        <td><span class="badge bg-warning text-white p-2">{{c.status}}</span></td>
+                                                    {% else %}
+                                                        <td><span class="badge bg-primary text-white p-2">{{c.status}}</span></td>
+                                                    {% endif %}
+                                                </tr>
+                                                {% endfor %}
+
+                                                {% comment %} <tr>
+                                                    <td>
+                                                        <p class="fw-medium mb-0">1</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="fw-medium mb-0"> <a href="" class="text-body align-middle fw-medium">Sandip</a></p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="fw-medium mb-0">7567626592</p>
+                                                    </td>
+                                                    <td>20 Sep, 2022</td>
+                                                    <td>&#8377; 240.00</td>
+                                                    <td>% 5</td>
+                                                    <td>&#8377; 40.00</td>
+                                                    <td>&#8377; 280.00</td>
+                                                    <td><span class="badge bg-warning text-white p-2">Process</span></td>
+                                                    
+                                                    <td>
+                                                        <ul class="list-inline hstack gap-2 mb-0">
+                                                           
+                                                            <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                                                                <a href="{% url 'client_update' %}" class="btn btn-soft-info btn-sm d-inline-block">
+                                                                    <i class="las la-pen fs-17 align-middle"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Remove">
+                                                                <a href="{% url 'client_update' %}" class="btn btn-soft-danger btn-sm d-inline-block">
+                                                                    <i class="las la-trash-alt fs-18 align-middle"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr> {% endcomment %}
+        
+                                                
+                                            </tbody><!-- end tbody -->
+                                        </table><!-- end table -->
+                                    </div><!-- end table responsive -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% comment %} <div class="row align-items-center mb-4 gy-3">
+                        <div class="col-md-5">
+                            <p class="mb-0 text-muted">Showing <b>1</b> to <b>5</b> of <b>10</b> results</p>
+                        </div>
+                        <div class="col-sm-auto ms-auto">
+                            <nav aria-label="...">
+                                <ul class="pagination mb-0">
+                                  <li class="page-item disabled">
+                                    <span class="page-link">Previous</span>
+                                  </li>
+                                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                  <li class="page-item" aria-current="page">
+                                    <span class="page-link">2</span>
+                                  </li>
+                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                  <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                  </li>
+                                </ul>
+                              </nav>
+                        </div>
+                    </div> {% endcomment %}
+
+  {% endblock content %}
+
+{% block extra_js %}
+
+    <!-- Sweet Alerts js -->
+    <script src="{% static 'libs/sweetalert2/sweetalert2.min.js' %}"></script>
+
+    {% comment %} <script>
+        setTimeout(function(){
+            location.reload();
+        }, 1000); // 1000 milliseconds = 1 second
+    </script> {% endcomment %}
+
+{% endblock extra_js %}
+   
